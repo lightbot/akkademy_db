@@ -16,9 +16,12 @@ class AkkademyDbSpec extends FunSpecLike with Matchers {
             it ("should placeg key/value into map") {
                 val actorRef = TestActorRef(new AkkademyDb)
                 actorRef ! SetRequest("key", "value")
+                actorRef ! SetRequest("int", new Integer(10))
+                actorRef ! SetRequest("key", "another value")
 
                 val akkademyDb = actorRef.underlyingActor
-                akkademyDb.map.get("key") should equal (Some("value"))
+                akkademyDb.map.get("key") should equal (Some("another value"))
+                akkademyDb.map.get("int") should equal (Some(10))
             }
         }
     }
